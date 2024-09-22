@@ -1,0 +1,22 @@
+;1
+(print (car(cdr(cdr(car(car(cdr '(1 (((2 3) (4 5) *) (6))))))))))
+
+;2
+(print(list '(a b) 7 '(())) )
+
+;3
+(print(cons 1 (cons (cons 2 nil) (cons 3 nil))))
+(print(list 1 (list 2) 3))
+
+;4
+(defun swap-first-two (lst)
+  (if (or (null lst) (null (cdr lst)))  ; Проверка, если список пуст или содержит только один элемент
+      lst  ; Если да, возвращаем исходный список
+      (cons (car (cdr lst))  ; Второй элемент становится первым
+            (cons (car lst)    ; Первый элемент становится вторым
+                  (cdr (cdr lst))))))  ; Остальные элементы остаются без изменений
+
+(print (swap-first-two '(1 2 3 4)))   ; Вернет (2 1 3 4)
+(print (swap-first-two '(a b c)))     ; Вернет (b a c)
+(print (swap-first-two '(x)))         ; Вернет (x)
+(print (swap-first-two '()))          ; Вернет ()
