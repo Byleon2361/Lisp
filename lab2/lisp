@@ -1,0 +1,32 @@
+
+
+;2
+(defun double-list (lst)
+
+  (if (null lst)                     ; Базовый случай: если список пустой
+
+      nil
+
+      (cons (car lst)               ; Добавляем первый элемент
+
+            (cons (car lst)         ; Добавляем его же снова
+
+                  (double-list (cdr lst)))))) ; Рекурсивно обрабатываем остаток списка
+(print(double-list '(1 a b 3)))
+;(1 1 a a b b 3 3)
+
+;22
+(defun remove-elements (lst1 lst2)
+  (labels ((remove-helper (lst1 lst2 index)
+             (cond
+               ((null lst1) nil) ; Базовый случай: если lst1 пуст
+               ((and (null lst2) (not (null lst1))) lst1) ; Если lst2 пуст, возвращаем lst1
+               ((= index (car lst2)) ; Если индекс совпадает с первым элементом lst2
+                (remove-helper (cdr lst1) (cdr lst2) (1+ index))) ; Пропускаем элемент
+               (t
+                (cons (car lst1) ; Иначе, добавляем текущий элемент
+                      (remove-helper (cdr lst1) lst2 (1+ index))))))) ; Рекурсивный вызов
+    (remove-helper lst1 lst2 1))) ; Запускаем с индекса 1
+(print(remove-elements '(a s d f g h j k l) '(1 4 5 8)))
+
+;(S D H J L)
