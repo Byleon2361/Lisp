@@ -1,0 +1,10 @@
+(defun subset? (subset set)
+  (if (null subset)               ; Если подмножество пустое, оно подмножество любого множества
+      t
+      (if (member (car subset) set) ; Проверяем, содержится ли первый элемент подмножества в множестве
+          (subset? (cdr subset) set) ; Рекурсивно проверяем оставшиеся элементы
+          nil)))                   ; Если элемент не найден, возвращаем nil
+(setq my-set '(1 2 3 4 5))
+(setq my-subset '(2 3))
+;; Проверим, является ли my-subset подмножеством my-set
+(print(subset? my-subset my-set))  ; Вернет t
