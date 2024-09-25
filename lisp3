@@ -8,3 +8,13 @@
 (setq my-subset '(2 3))
 ;; Проверим, является ли my-subset подмножеством my-set
 (print(subset? my-subset my-set))  ; Вернет t
+
+(defun myUnion (set1 set2)
+  (if (null set1)
+      set2
+      (if (member (car set1) set2)
+          (union (cdr set1) set2)
+          (cons (car set1) (union (cdr set1) set2)))))
+(setq setA '(1 2 3 4))
+(setq setB '(3 4 5 6))
+(print(myUnion setA setB))
