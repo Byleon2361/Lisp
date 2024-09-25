@@ -2,18 +2,24 @@
 
 ;2
 (defun double-list (lst)
-
   (if (null lst)                     ; Базовый случай: если список пустой
-
       nil
-
       (cons (car lst)               ; Добавляем первый элемент
-
             (cons (car lst)         ; Добавляем его же снова
-
                   (double-list (cdr lst)))))) ; Рекурсивно обрабатываем остаток списка
 (print(double-list '(1 a b 3)))
 ;(1 1 a a b b 3 3)
+
+;12
+(defun pair-elements (lst)
+  (if (null lst)
+      nil
+      (if (null (cdr lst))
+          (list (list (car lst))) ; Если остался только один элемент, возвращаем его в виде списка
+          (cons (list (car lst) (car (last lst))) ; создаем пару элементов
+                (pair-elements (butlast (cdr lst))))))) ; рекурсивно обрабатываем оставшуюся часть списка
+(print(pair-elements '(1 a b c 2 3 f)))
+;((1 f) (a 3) (b 2) (с))
 
 ;22
 (defun remove-elements (lst1 lst2)
