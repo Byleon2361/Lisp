@@ -1,3 +1,4 @@
+;2
 (defun subset? (subset set)
   (if (null subset)               ; Если подмножество пустое, оно подмножество любого множества
       t
@@ -8,7 +9,9 @@
 (setq my-subset '(2 3))
 ;; Проверим, является ли my-subset подмножеством my-set
 (print(subset? my-subset my-set))  ; Вернет t
+;T 
 
+;5
 (defun myUnion (set1 set2)
   (if (null set1)
       set2
@@ -17,4 +20,16 @@
           (cons (car set1) (union (cdr set1) set2)))))
 (setq setA '(1 2 3 4))
 (setq setB '(3 4 5 6))
-(print(myUnion setA setB))
+(print(myUnion setA setB)) 
+;(1 2 3 4 5 6)
+
+;10
+(defun replace-if-not (lst predicate)
+  (cond
+    ((null lst) nil)  ;; Если список пустой, вернуть nil
+    ((funcall predicate (car lst))  ;; Если первый элемент удовлетворяет предикату
+     (cons (car lst) (replace-if-not (cdr lst) predicate))) ;; Рекурсивный вызов для хвоста
+    (t  ;; Если первый элемент не удовлетворяет предикату
+     (cons '* (replace-if-not (cdr lst) predicate)))))  ;; Заменить его на '*' и рекурсивно обработать хвост
+(print(replace-if-not '(1 "hello" -3 4 "world" nil) 'numberp))
+;(1 * -3 4 * *)
