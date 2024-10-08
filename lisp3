@@ -1,27 +1,26 @@
 ;2
-(defun subset? (subset set)
-  (if (null subset)               ; Если подмножество пустое, оно подмножество любого множества
-      t
-      (if (member (car subset) set) ; Проверяем, содержится ли первый элемент подмножества в множестве
-          (subset? (cdr subset) set) ; Рекурсивно проверяем оставшиеся элементы
-          nil)))                   ; Если элемент не найден, возвращаем nil
-(setq my-set '(1 2 3 4 5))
-(setq my-subset '(2 3))
-;; Проверим, является ли my-subset подмножеством my-set
-(print(subset? my-subset my-set))  ; Вернет t
-;T 
+(defun my-subsetp (a b)                    ; Определяем функцию my-subsetp, принимающую два аргумента a и b
+  (cond                                   ; Начинаем конструкцию cond для проверки условий
+    ((null a) t)                         ; Если a пусто, возвращаем true (t)
+    ((null b) nil)                       ; Если b пусто, возвращаем nil
+    ((member (car a) b)                  ; Проверяем, находится ли первый элемент a в b
+     (my-subsetp (cdr a) b))             ; Если да, рекурсивно проверяем оставшиеся элементы a
+    (t nil)))                            ; Если ни одно из условий не выполнено, возвращаем nil
 
-;5
-(defun myUnion (set1 set2)
-  (if (null set1)
-      set2
-      (if (member (car set1) set2)
-          (union (cdr set1) set2)
-          (cons (car set1) (union (cdr set1) set2)))))
-(setq setA '(1 2 3 4))
-(setq setB '(3 4 5 6))
-(print(myUnion setA setB)) 
-;(1 2 3 4 5 6)
+(print (my-subsetp '(1 2) '(1 2 3 4)))  ; Выводим результат проверки, является ли '(1 2) подмножеством '(1 2 3 4) => t
+(print (my-subsetp '(1 5) '(1 2 3 4)))  ; Выводим результат проверки, является ли '(1 5) подмножеством '(1 2 3 4) => nil
+
+
+(defun myUnion (set1 set2)                ; Определяем функцию myUnion, принимающую два множества: set1 и set2
+  (if (null set1)                         ; Проверяем, является ли set1 пустым
+      set2                               ; Если пустое, возвращаем set2
+      (if (member (car set1) set2)      ; Проверяем, есть ли первый элемент set1 в set2
+          (myUnion (cdr set1) set2)     ; Если есть, рекурсивно вызываем myUnion для оставшихся элементов set1
+          (cons (car set1)               ; Если элемента нет в set2, добавляем его в результат
+                (myUnion (cdr set1) set2))))) ; Рекурсивно обрабатываем оставшиеся элементы set1
+
+(print (myUnion '(1 2 3 4) '(3 4 5 6))) ; Вызываем myUnion с двумя множествами и печатаем результат
+
 
 ;10
 (defun replace-if-not (lst predicate)
